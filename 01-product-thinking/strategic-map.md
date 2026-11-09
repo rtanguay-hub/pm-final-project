@@ -1,11 +1,7 @@
-# Strategic Discovery Map
-
-> **Module 1 · Lab 1.** Repo file `01-product-thinking/strategic-map.md` — part of your submission.
-> Do the lab in the **Module 1 · Exercise 1 Guide** (linked from the Module 1 deck), then click **⬇ Download .md** — it saves as this exact file. Commit it here.
-> It's the discovery groundwork behind your `problem-hook.md`.
+# Strategic Discovery Map (Module 1)
 
 ## Responses
-
-- **Feature with no strategic answer (why is this a 12-week priority?):** _(not filled in)_
-- **Feature that looks "correct" but has zero strategic weight:** _(not filled in)_
-- **V3 vs your Step 1 baseline — what changed, and was it your PM knowledge that forced usefulness?:** _(not filled in)_
+- **Write one feature from the map that, if an engineer asked “why is this a priority for our 12-week roadmap?”, you honestly could not give a strategic answer for.:** Weather and climate adjustment: I think this is a good idea but not sure if its really justified. Customers will need to grant location access, which not all do, and what about other factors like how much exercise. Elevation impacts hydration needs along with age, weight, and more. How much personal info are we going to go after here and how likely will customers provide it?
+- **Write one feature that looks “correct” for the app but has zero strategic weight, you have no idea if it helps the company make money or whether a single user actually asked for it.:** Smart Bottles via Bluetooth: I don't know how many bottles out there are "smart bottles" and how many of such a product would be out there amongst our users. As in, if 95% of the customers don't have smart bottles, why bother build and maintain the integration?
+- **Compare V3 to your Step 1 baseline. What changed, and is the output objectively better, did the AI get smarter, or did your added PM knowledge (JTBD, effort/impact, retention) force it to be useful?:** Added PM knowledge definitely helped it help me.
+- **Key takeaway: how does this prove the PM’s role is to think while the AI’s role is to execute?:** I see my role is to feed really good product principles and understanding (e.g. context) so it can better provide analysis. Its obviously really good at analyzing data too so the more I can feed in customer interviews, survey responses, PEQs, etc. then it can better help me see patterns so I can prioritize.
