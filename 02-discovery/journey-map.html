@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Future State Journey — The Mood-Driven Seeker</title>
+<style>
+  :root {
+    --ink: #1d2433;
+    --muted: #5b6475;
+    --line: #d9dee7;
+    --bg: #f6f7fa;
+    --card: #ffffff;
+    --accent: #2f5d8a;
+    --s1: #8a6d3b; --s1-bg: #f7f1e6;
+    --s2: #2f6f8a; --s2-bg: #e8f2f6;
+    --s3: #3b7a57; --s3-bg: #e9f4ee;
+    --s4: #5a4a8a; --s4-bg: #efecf7;
+    --bad: #a3403a; --good: #2f7a4f;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font: 14px/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  .page { max-width: 1180px; margin: 0 auto; padding: 28px 32px 24px; }
+
+  header { display: flex; justify-content: space-between; align-items: flex-end; gap: 24px;
+           border-bottom: 2px solid var(--ink); padding-bottom: 14px; }
+  .eyebrow { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+  h1 { margin: 4px 0 6px; font-size: 26px; line-height: 1.15; }
+  .persona { color: var(--muted); max-width: 640px; }
+  .strategy { min-width: 320px; max-width: 400px; font-size: 13px; }
+  .strategy div { margin-bottom: 6px; }
+  .strategy b { display: block; font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+
+  /* Timeline */
+  .timeline { position: relative; margin: 26px 0 8px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  .timeline::before {
+    content: ""; position: absolute; left: 4%; right: 0; top: 15px; height: 3px;
+    background: linear-gradient(90deg, var(--s1), var(--s2), var(--s3), var(--s4));
+    border-radius: 2px;
+  }
+  .timeline::after {
+    content: ""; position: absolute; right: -4px; top: 9px;
+    border-left: 12px solid var(--s4); border-top: 7.5px solid transparent; border-bottom: 7.5px solid transparent;
+  }
+  .node { position: relative; text-align: left; padding-left: 4%; }
+  .dot { width: 32px; height: 32px; border-radius: 50%; color: #fff; font-weight: 700;
+         display: grid; place-items: center; position: relative; z-index: 1; border: 3px solid var(--bg); }
+  .time { font-size: 11px; color: var(--muted); margin-top: 6px; font-weight: 600; letter-spacing: .04em; }
+  .quote { font-style: italic; margin-top: 2px; font-size: 13px; }
+
+  /* Stage cards */
+  .stages { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 12px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; overflow: hidden;
+          display: flex; flex-direction: column; }
+  .card-head { padding: 10px 14px; }
+  .card-head .num { font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
+  .card-head h2 { margin: 2px 0 0; font-size: 16px; }
+  .card-body { padding: 10px 14px 14px; display: flex; flex-direction: column; gap: 9px; flex: 1; }
+  .field b { display: block; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 1px; }
+  .state { display: inline-block; padding: 1px 8px; border-radius: 10px; font-size: 12px; font-weight: 600; }
+  .pain { font-size: 12.5px; }
+  .ref { color: var(--muted); font-size: 11px; }
+  ul.ab { list-style: none; margin: 2px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+  ul.ab li { font-size: 12.5px; padding: 6px 8px; border-radius: 6px; background: var(--bg); }
+  ul.ab .arrow { font-weight: 700; margin: 0 3px; }
+  ul.ab .benefit { font-weight: 600; }
+
+  .s1 .dot, .s1 .card-head { background: var(--s1); } .s1 .card-head { color: #fff; } .s1 .state { background: var(--s1-bg); color: var(--s1); } .s1 .arrow { color: var(--s1); }
+  .s2 .dot, .s2 .card-head { background: var(--s2); } .s2 .card-head { color: #fff; } .s2 .state { background: var(--s2-bg); color: var(--s2); } .s2 .arrow { color: var(--s2); }
+  .s3 .dot, .s3 .card-head { background: var(--s3); } .s3 .card-head { color: #fff; } .s3 .state { background: var(--s3-bg); color: var(--s3); } .s3 .arrow { color: var(--s3); }
+  .s4 .dot, .s4 .card-head { background: var(--s4); } .s4 .card-head { color: #fff; } .s4 .state { background: var(--s4-bg); color: var(--s4); } .s4 .arrow { color: var(--s4); }
+
+  /* Today vs Future */
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+  .compare div { border-radius: 8px; padding: 9px 14px; font-size: 13px; }
+  .today { background: #f8ecea; border-left: 4px solid var(--bad); }
+  .future { background: #e8f3ec; border-left: 4px solid var(--good); }
+  .compare b { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; margin-right: 6px; }
+  .today b { color: var(--bad); } .future b { color: var(--good); }
+
+  /* Advantages */
+  .adv-title { margin: 20px 0 8px; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--accent); }
+  .advantages { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .adv { background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--accent); border-radius: 8px; padding: 10px 14px; }
+  .adv h3 { margin: 0 0 4px; font-size: 14px; }
+  .adv p { margin: 0; font-size: 12.5px; color: var(--muted); }
+  .adv .vs { display: block; margin-top: 6px; font-size: 11.5px; color: var(--bad); }
+
+  footer { margin-top: 16px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 11px; color: var(--muted);
+           display: flex; justify-content: space-between; gap: 24px; }
+
+  @media (max-width: 900px) {
+    header { flex-direction: column; align-items: flex-start; }
+    .timeline, .stages, .advantages, .compare { grid-template-columns: 1fr; }
+    .timeline::before, .timeline::after { display: none; }
+  }
+  @media print {
+    @page { size: landscape; margin: 10mm; }
+    body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .page { padding: 0; max-width: none; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <div>
+      <div class="eyebrow">Future State Journey · Content Discoverability</div>
+      <h1>The Mood-Driven Seeker</h1>
+      <div class="persona">An engaged subscriber who knows the <em>feeling</em> they want from tonight's viewing but rarely knows a specific title. <strong>Goal:</strong> describe the mood and get a short list of good matches within minutes.</div>
+    </div>
+    <div class="strategy">
+      <div><b>Strategy</b>Restore brand authority through human-led curation, not mass-market scale.</div>
+      <div><b>Value Prop</b>For aficionados, quality of engagement over volume of content.</div>
+    </div>
+  </header>
+
+  <section class="timeline" aria-label="Journey timeline">
+    <div class="node s1"><div class="dot">1</div><div class="time">0 MIN</div><div class="quote">“What am I in the mood for?”</div></div>
+    <div class="node s2"><div class="dot">2</div><div class="time">~1 MIN</div><div class="quote">“Slow, quiet French drama.”</div></div>
+    <div class="node s3"><div class="dot">3</div><div class="time">~3 MIN</div><div class="quote">“A curator says this one, and why.”</div></div>
+    <div class="node s4"><div class="dot">4</div><div class="time">~5 MIN → NEXT WEEK</div><div class="quote">“Exactly right. What’s next?”</div></div>
+  </section>
+
+  <section class="stages">
+    <article class="card s1">
+      <div class="card-head"><div class="num">Stage 1</div><h2>Arrive: Set Tonight's Mood</h2></div>
+      <div class="card-body">
+        <div class="field"><b>User Action</b>Opens the app to a calm screen asking “What are you in the mood for?”</div>
+        <div class="field"><b>Internal State</b><span class="state">Tired · Wary</span> Braced for another long scroll.</div>
+        <div class="field pain"><b>Pain Point Addressed</b>A “loud and new” home screen; blaring autoplay trailers. <span class="ref">UXR-09 · UXR-05 · BUG-1077</span></div>
+        <ul class="ab">
+          <li>Silent mood prompt replaces autoplay <span class="arrow">→</span> <span class="benefit">user starts focused, not overwhelmed.</span></li>
+          <li>Mood tiles like “Quiet Sunday” <span class="arrow">→</span> <span class="benefit">one-tap entry with no title needed.</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="card s2">
+      <div class="card-head"><div class="num">Stage 2</div><h2>Describe: Speak the Vibe</h2></div>
+      <div class="card-body">
+        <div class="field"><b>User Action</b>Types “slow quiet French drama” or taps “Book Club Pick.”</div>
+        <div class="field"><b>Internal State</b><span class="state">Hopeful · Doubtful</span> Expects search to fail again.</div>
+        <div class="field pain"><b>Pain Point Addressed</b>Search that only works with exact titles. <span class="ref">UXR-07 · BUG-1080</span></div>
+        <ul class="ab">
+          <li>Natural-language search reads mood, pace and language <span class="arrow">→</span> <span class="benefit">results match intent.</span></li>
+          <li>Curator-tagged catalog powers results <span class="arrow">→</span> <span class="benefit">hidden gems surface instead of franchise blockbusters.</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="card s3">
+      <div class="card-head"><div class="num">Stage 3</div><h2>Decide: Trust the Shortlist</h2></div>
+      <div class="card-body">
+        <div class="field"><b>User Action</b>Reviews 3–5 picks, each with a short curator note on why it fits.</div>
+        <div class="field"><b>Internal State</b><span class="state">Relieved · Guided</span> The choice feels manageable.</div>
+        <div class="field pain"><b>Pain Point Addressed</b>Choice overload; repetitive, genre-only recommendations. <span class="ref">UXR-01 · UXR-12 · UXR-02 · BUG-1091</span></div>
+        <ul class="ab">
+          <li>Shortlist capped at five <span class="arrow">→</span> <span class="benefit">decision takes minutes, not twenty.</span></li>
+          <li>Curator's “why this film” note <span class="arrow">→</span> <span class="benefit">trust moves from friends to the platform.</span></li>
+          <li>Picks span genres and eras <span class="arrow">→</span> <span class="benefit">user treated as a person, not a genre.</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="card s4">
+      <div class="card-head"><div class="num">Stage 4</div><h2>Watch &amp; Return: A Good Evening, Remembered</h2></div>
+      <div class="card-body">
+        <div class="field"><b>User Action</b>Watches, rates how well it fit the mood, and signs up for a weekly curated digest.</div>
+        <div class="field"><b>Internal State</b><span class="state">Satisfied · Loyal</span> Feels understood; curious for next time.</div>
+        <div class="field pain"><b>Pain Point Addressed</b>Comfort rewatching; leaving for curated competitors. <span class="ref">UXR-03 · UXR-04</span></div>
+        <ul class="ab">
+          <li>One-tap “Right mood?” rating <span class="arrow">→</span> <span class="benefit">future picks sharpen to personal taste.</span></li>
+          <li>Weekly hand-picked digest <span class="arrow">→</span> <span class="benefit">a reason to return without browsing.</span></li>
+          <li>Saved picks sync across devices <span class="arrow">→</span> <span class="benefit">a discovery is never lost between screens.</span></li>
+        </ul>
+      </div>
+    </article>
+  </section>
+
+  <section class="compare">
+    <div class="today"><b>Today</b>20 minutes of scrolling → app closed, nothing watched (UXR-01)</div>
+    <div class="future"><b>Future</b>Under 5 minutes from opening the app to a film that fits the mood</div>
+  </section>
+
+  <h2 class="adv-title">Competitive Advantages over the Manual Workaround</h2>
+  <section class="advantages">
+    <div class="adv">
+      <h3>1 · Expert advice whenever they want it</h3>
+      <p>Curators' picks are there every night, inside the app, right when the user is deciding.</p>
+      <span class="vs">vs. asking a friend, which depends on someone being available and having good taste</span>
+    </div>
+    <div class="adv">
+      <h3>2 · Every pick can be played now</h3>
+      <p>Every curated pick is in our catalog and available to watch immediately.</p>
+      <span class="vs">vs. Google and Reddit lists, which don't know our catalog and lead to dead ends</span>
+    </div>
+    <div class="adv">
+      <h3>3 · It gets better with use</h3>
+      <p>Each mood rating improves the next shortlist, so the platform becomes more valuable and harder to leave.</p>
+      <span class="vs">vs. comfort rewatching, which narrows what a user watches over time</span>
+    </div>
+  </section>
+
+  <footer>
+    <span><strong>Assumptions to check:</strong> enough curators to tag the catalog by mood; natural-language search that works; a concept test with aficionado users.</span>
+    <span>Source: UXR-01–12, BUG-1058–1091 · Small qualitative sample · Draft for human review</span>
+  </footer>
+
+</div>
+</body>
+</html>
