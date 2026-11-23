@@ -5,7 +5,7 @@
 
 ## Finalized product hypothesis
 
-> Based on Mood-Driven Seekers who can't turn a feeling into a title (a search for "slow quiet French drama" returns *Fast & Furious*, UXR-07; users close the app after 20 minutes without watching, UXR-01) and a **7-point drop in searches that end in a play (41% → 34%)**, I believe that letting **Mood-Driven Seekers (Wanderers)** search and browse by mood will result in **higher retention**, as measured by **recovering search-to-play conversion to 41%** and a **+5 pt lift in Month 1 retention (79% → 84%)**. I will protect **Power User sessions per week (4.8×, no drop of more than 5%)** and make a go/no-go decision after **60 days**.
+> Based on Mood-Driven Seekers who can't turn a feeling into a title (a search for "slow quiet French drama" returns *Fast & Furious*, UXR-07; users close the app after 20 minutes without watching, UXR-01) and a **7-point drop in searches that end in a play (41% → 34%)**, I believe that letting **Mood-Driven Seekers (Wanderers)** search and browse by mood will result in **higher retention**, as measured by **recovering search-to-play conversion to 41%** and a **+5 pt lift in Month 1 retention (79% → 84%)**. I will protect **Power User sessions per week (4.8×, no drop of more than 5%)** and make a go/no-go decision after **90 days**, with guardrail checkpoints at days 30 and 60.
 
 ## Success metrics
 
@@ -33,10 +33,22 @@
 
 ## Decision window
 
-**60 days.** That covers Mo. 0 → Mo. 2 for the first exposed cohort, which is enough to read Mo. 1 retention.
+**90 days, with checkpoints at days 30 and 60.**
 
-| Outcome | Criteria |
+Why 90 and not 60:
+- **The north-star metric needs time.** If new users join the test over the first month, the last of them only reaches Month 1 around day 60. At 90 days there are two full cohorts at Month 1 and the first cohort at Month 2.
+- **The effect grows over time.** The Spotlight vs Full Library gap was 11 pts at Month 1, 14 at Month 2 and 18 at Month 3. A 60-day read would catch the smallest version of the gap.
+- **Wanderers use the app rarely.** At 1.1 sessions a week, each Wanderer gives only about 8–9 sessions in 60 days, which is thin data for search-to-play.
+- **Novelty and seasonality.** A third month gets past the early curiosity spike and any holiday effect (the same effect that may have inflated Spotlight's early cohorts).
+
+| Checkpoint | What we look at | What can happen |
+|---|---|---|
+| **Day 30** | Guardrails (Power User sessions/week, Spotlight engagement) and early search-to-play | **Kill early** if a guardrail drops more than 5% |
+| **Day 60** | Search-to-play conversion, first Month 1 retention read | **Iterate** if search-to-play has improved by less than 2 pts |
+| **Day 90** | Month 1 retention across two cohorts, early Month 2 | Final go/no-go decision (below) |
+
+| Day 90 outcome | Criteria |
 |---|---|
-| **Scale** | Search-to-play conversion is 38% or higher **and** Mo. 1 retention is up 3 pts or more vs holdout, with both guardrails held |
-| **Iterate** | Search-to-play improves but retention lift is under 3 pts, or a guardrail dips but stays within 5% |
+| **Scale** | Search-to-play conversion is 38% or higher **and** Month 1 retention is up 3 pts or more vs holdout, with both guardrails held |
+| **Iterate** | Search-to-play improves but Month 1 retention lift is under 3 pts, or a guardrail dips but stays within 5% |
 | **Kill** | Search-to-play improves by less than 2 pts, or Power User sessions/week drop by more than 5% |
